@@ -36,7 +36,7 @@ class ImpactEstimator {
   }
 
   get infectionsByRequestedTime() {
-    const powerFactor = this.periodInDays / 3;
+    const powerFactor = Math.floor(this.periodInDays / 3);
     return this.currentlyInfected * 2 ** powerFactor;
   }
 
@@ -58,7 +58,7 @@ class ImpactEstimator {
 
   get dollarsInFlight() {
     return this.infectionsByRequestedTime * this.region.avgDailyIncomeInUSD
-      * this.region.avgDailyIncomePopulation * this.timeToElapse;
+      * this.region.avgDailyIncomePopulation * this.periodInDays;
   }
 }
 const covid19ImpactEstimator = (data) => (
