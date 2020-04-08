@@ -40,22 +40,27 @@ class ImpactEstimator {
     return this.currentlyInfected * 2 ** powerFactor;
   }
 
-  getEstimate() {
+  get severeCasesByRequestedTime() {
+    return 0.15 * this.infectionsByRequestedTime;
+  }
+
+  get hospitalBedsByRequestedTime() {
+    return this.severeCasesByRequestedTime - 0.35 * this.totalHospitalBeds;
+  }
+
+  /* getEstimate() {
     return {
       currentlyInfected: this.currentlyInfected,
       infectionsByRequestedTime: this.infectionsByRequestedTime
     };
-  }
+  } */
 }
-const covid19ImpactEstimator = (data) => {
-  const impactObj = new ImpactEstimator(data, 10);
-  const severeImpactObj = new ImpactEstimator(data, 50);
-  return {
+const covid19ImpactEstimator = (data) =>
+  /* const impactObj = new ImpactEstimator(data, 10);
+  const severeImpactObj = new ImpactEstimator(data, 50); */
+  ({
     data,
-    impact: impactObj.getEstimate(),
-    severeImpact: severeImpactObj.getEstimate()
-  };
-};
-
-
+    impact: new ImpactEstimator(data, 10),
+    severeImpact: new ImpactEstimator(data, 50)
+  });
 export default covid19ImpactEstimator;
