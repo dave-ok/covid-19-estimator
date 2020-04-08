@@ -55,12 +55,12 @@ class ImpactEstimator {
     };
   } */
 }
-const covid19ImpactEstimator = (data) =>
-  /* const impactObj = new ImpactEstimator(data, 10);
-  const severeImpactObj = new ImpactEstimator(data, 50); */
-  ({
+const covid19ImpactEstimator = (data) => (
+  {
     data,
     impact: new ImpactEstimator(data, 10),
     severeImpact: new ImpactEstimator(data, 50)
-  });
+  }
+);
+
 export default covid19ImpactEstimator;
