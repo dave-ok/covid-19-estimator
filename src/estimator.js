@@ -36,7 +36,7 @@ class ImpactEstimator {
   }
 
   get infectionsByRequestedTime() {
-    const powerFactor = Math.floor(this.periodInDays / 3);
+    const powerFactor = this.periodInDays / 3;
     return this.currentlyInfected * 2 ** powerFactor;
   }
 
