@@ -17,7 +17,7 @@ class ImpactEstimator {
     this.severityFactor = severityFactor;
   }
 
-  periodInDays() {
+  get periodInDays() {
     switch (this.periodType) {
       case 'weeks': {
         return this.timeToElapse * 7;
