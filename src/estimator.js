@@ -42,6 +42,7 @@ class ImpactEstimator {
 
   getEstimate() {
     return {
+      currentlyInfected: this.currentlyInfected,
       infectionsByRequestedTime: this.infectionsByRequestedTime
     };
   }
