@@ -4,61 +4,79 @@ class ImpactEstimator {
     periodType,
     timeToElapse,
     reportedCases,
-    population,
     totalHospitalBeds
   },
   severityFactor) {
-    this.region = region;
+    /*  this.region = region;
     this.periodType = periodType;
     this.timeToElapse = timeToElapse;
     this.reportedCases = reportedCases;
     this.population = population;
     this.totalHospitalBeds = totalHospitalBeds;
-    this.severityFactor = severityFactor;
-  }
+    this.severityFactor = severityFactor; */
 
-  get periodInDays() {
-    switch (this.periodType) {
-      case 'weeks': {
-        return this.timeToElapse * 7;
-      }
-      case 'months': {
-        return this.timeToElapse * 30;
-      }
-      default: {
-        return this.timeToElapse;
-      }
-    }
-  }
+    Object.defineProperty(this, 'currentlyInfected', {
+      get() {
+        return reportedCases * severityFactor;
+      },
+      enumerable: true
+    });
 
-  get currentlyInfected() {
-    return this.reportedCases * this.severityFactor;
-  }
+    Object.defineProperty(this, 'periodInDays', {
+      get() {
+        switch (periodType) {
+          case 'weeks': {
+            return timeToElapse * 7;
+          }
+          case 'months': {
+            return timeToElapse * 30;
+          }
+          default: {
+            return timeToElapse;
+          }
+        }
+      },
+      enumerable: false
+    });
 
-  get infectionsByRequestedTime() {
-    const powerFactor = Math.floor(this.periodInDays / 3);
-    return this.currentlyInfected * 2 ** powerFactor;
-  }
-
-  get severeCasesByRequestedTime() {
-    return 0.15 * this.infectionsByRequestedTime;
-  }
-
-  get hospitalBedsByRequestedTime() {
-    return 0.35 * this.totalHospitalBeds - this.severeCasesByRequestedTime;
-  }
-
-  get casesForICUByRequestedTime() {
-    return 0.05 * this.infectionsByRequestedTime;
-  }
-
-  get casesForVentilatorsByRequestedTime() {
-    return 0.02 * this.infectionsByRequestedTime;
-  }
-
-  get dollarsInFlight() {
-    return this.infectionsByRequestedTime * this.region.avgDailyIncomeInUSD
-      * this.region.avgDailyIncomePopulation * this.periodInDays;
+    Object.defineProperty(this, 'infectionsByRequestedTime', {
+      get() {
+        const powerFactor = Math.floor(this.periodInDays / 3);
+        return this.currentlyInfected * 2 ** powerFactor;
+      },
+      enumerable: true
+    });
+    Object.defineProperty(this, 'severeCasesByRequestedTime', {
+      get() {
+        return 0.15 * this.infectionsByRequestedTime;
+      },
+      enumerable: true
+    });
+    Object.defineProperty(this, 'hospitalBedsByRequestedTime', {
+      get() {
+        return 0.35 * totalHospitalBeds - this.severeCasesByRequestedTime;
+      },
+      enumerable: true
+    });
+    Object.defineProperty(this, 'casesForICUByRequestedTime', {
+      get() {
+        return 0.05 * this.infectionsByRequestedTime;
+      },
+      enumerable: true
+    });
+    Object.defineProperty(this, 'casesForVentilatorsByRequestedTime', {
+      get() {
+        return 0.02 * this.infectionsByRequestedTime;
+      },
+      enumerable: true
+    });
+    Object.defineProperty(this, 'dollarsInFlight', {
+      get() {
+        return this.infectionsByRequestedTime * region.avgDailyIncomeInUSD
+          * region.avgDailyIncomePopulation * this.periodInDays;
+      },
+      enumerable: true
+    });
   }
 }
 const covid19ImpactEstimator = (data) => (
