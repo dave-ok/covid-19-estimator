@@ -47,6 +47,19 @@ class ImpactEstimator {
   get hospitalBedsByRequestedTime() {
     return 0.35 * this.totalHospitalBeds - this.severeCasesByRequestedTime;
   }
+
+  get casesForICUByRequestedTime() {
+    return 0.05 * this.infectionsByRequestedTime;
+  }
+
+  get casesForVentilatorsByRequestedTime() {
+    return 0.02 * this.infectionsByRequestedTime;
+  }
+
+  get dollarsInFlight() {
+    return this.infectionsByRequestedTime * this.region.avgDailyIncomeInUSD
+      * this.region.avgDailyIncomePopulation * this.timeToElapse;
+  }
 }
 const covid19ImpactEstimator = (data) => (
   {
