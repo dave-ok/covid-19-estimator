@@ -1,12 +1,14 @@
 import express from 'express';
 import cors from 'cors';
 import v1Router from './v1/routes';
+import logger from './utils/requestLogger';
 
 // create express app
 const app = express();
 
 // set up CORS
 app.use(cors());
+app.use(logger);
 
 
 // include middleware to enable json body parsing and nested objects
