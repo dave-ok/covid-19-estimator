@@ -11,15 +11,15 @@ const router = express.Router();
 
 const constraints = {
   region: {
-    name: 'required|alpha_num',
-    avgAge: 'required|min:1',
+    name: 'alpha_num',
+    avgAge: 'min:1',
     avgDailyIncomeInUSD: 'required|min:1',
     avgDailyIncomePopulation: 'required|between:0,1'
   },
   periodType: ['required', { in: ['days', 'weeks', 'months'] }],
   timeToElapse: 'required|min:1',
   reportedCases: 'required|min:0',
-  population: 'required|min:1',
+  population: 'min:1',
   totalHospitalBeds: 'required|min:1'
 };
 
