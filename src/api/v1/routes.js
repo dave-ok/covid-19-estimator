@@ -1,68 +1,24 @@
 import express from 'express';
-import validate from 'validate.js';
+import Validator from 'validatorjs';
 import estimator from '../../estimator';
+
+const js2xmlparser = require('js2xmlparser');
+const { unflatten } = require('flat');
 
 const router = express.Router();
 
-const STR_PATTERN = '[a-zA-Z ]+';
-const STR_MESSAGE = '%{value} must be a valid string';
-
-const inputDataRules = {
-  'region.name': {
-    presence: true,
-    format: {
-      pattern: STR_PATTERN,
-      message: STR_MESSAGE
-    }
+const constraints = {
+  region: {
+    name: 'required|alpha_num',
+    avgAge: 'required|min:1',
+    avgDailyIncomeInUSD: 'required|min:1',
+    avgDailyIncomePopulation: 'required|between:0,1'
   },
-  'region.avgAge': {
-    presence: true,
-    numericality: {
-      greaterThan: 1
-    }
-  },
-  'region.avgDailyIncomePopulation': {
-    presence: true,
-    numericality: {
-      lessThanOrEqualTo: 1,
-      greaterThanOrEqualTo: 0
-    }
-  },
-  'region.avgDailyIncomeInUSD': {
-    presence: true,
-    type: 'integer',
-    numericality: {
-      greaterThan: 0
-    }
-  },
-  periodType: {
-    presence: true,
-    inclusion: ['days', 'weeks', 'months']
-  },
-  timeToElapse: {
-    presence: true,
-    numericality: {
-      greaterThan: 1
-    }
-  },
-  reportedCases: {
-    presence: true,
-    numericality: {
-      greaterThan: 1
-    }
-  },
-  population: {
-    presence: true,
-    numericality: {
-      greaterThan: 1
-    }
-  },
-  totalHospitalBeds: {
-    presence: true,
-    numericality: {
-      greaterThan: 1
-    }
-  }
+  periodType: ['required', { in: ['days', 'weeks', 'months'] }],
+  timeToElapse: 'required|min:1',
+  reportedCases: 'required|min:0',
+  population: 'required|min:1',
+  totalHospitalBeds: 'required|min:1'
 };
 
 router.get('/', (req, res) => {
@@ -71,18 +27,42 @@ router.get('/', (req, res) => {
 
 router.get('/json', (req, res) => {
   // respond json
-  const { data } = req.body;
-  const error = validate(data, inputDataRules);
-  if (error) {
-    res.status(400).send({ error });
+  const { data = {} } = req.body;
+  const validation = new Validator(data, constraints);
+  validation.setAttributeNames({
+    'region.name': 'name',
+    'region.avgAge': 'avgAge',
+    'region.avgDailyIncomeInUSD': 'avgDailyIncomeInUSD',
+    'region.avgDailyIncomePopulation': 'avgDailyIncomePopulation'
+  });
+
+  if (validation.fails()) {
+    res.status(400).send(unflatten(validation.errors.all()));
+    return;
   }
 
   res.status(200).send(estimator(data));
 });
 router.get('/xml', (req, res) => {
   // respond xml
-  res.send('get xml');
+  const { data = {} } = req.body;
+  const validation = new Validator(data, constraints);
+  validation.setAttributeNames({
+    'region.name': 'name',
+    'region.avgAge': 'avgAge',
+    'region.avgDailyIncomeInUSD': 'avgDailyIncomeInUSD',
+    'region.avgDailyIncomePopulation': 'avgDailyIncomePopulation'
+  });
+
+  res.set('Content-Type', 'text/xml');
+  if (validation.fails()) {
+    res.status(400).send(js2xmlparser.parse('root', unflatten(validation.errors.all())));
+    return;
+  }
+
+  res.status(200).send(js2xmlparser.parse('root', estimator(data)));
 });
+
 router.get('/logs', (req, res) => {
   // return log
   res.send('get logs');
