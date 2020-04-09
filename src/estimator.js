@@ -72,8 +72,8 @@ class ImpactEstimator {
     });
     Object.defineProperty(this, 'dollarsInFlight', {
       get() {
-        return Math.round(this.infectionsByRequestedTime * region.avgDailyIncomeInUSD
-          * region.avgDailyIncomePopulation * this.periodInDays * 100) / 100;
+        return parseFloat((this.infectionsByRequestedTime * region.avgDailyIncomeInUSD
+          * region.avgDailyIncomePopulation * this.periodInDays).toFixed(2));
       },
       enumerable: true
     });
