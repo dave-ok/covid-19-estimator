@@ -27,7 +27,7 @@ router.get('/', (req, res) => {
   res.send('Covid-19 Impact Estimator root');
 });
 
-router.get('/json', (req, res) => {
+router.post('/json', (req, res) => {
   // respond json
   const { data = {} } = req.body;
   const validation = new Validator(data, constraints);
@@ -45,7 +45,7 @@ router.get('/json', (req, res) => {
 
   res.status(200).send(estimator(data));
 });
-router.get('/xml', (req, res) => {
+router.post('/xml', (req, res) => {
   // respond xml
   const { data = {} } = req.body;
   const validation = new Validator(data, constraints);
@@ -65,7 +65,7 @@ router.get('/xml', (req, res) => {
   res.status(200).send(js2xmlparser.parse('root', estimator(data)));
 });
 
-router.get('/logs', (req, res) => {
+router.post('/logs', (req, res) => {
   // return log
   const logStream = fs.createReadStream(path.join(process.cwd(), '/src/requests.log'));
 
