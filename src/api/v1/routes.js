@@ -23,11 +23,13 @@ const constraints = {
   totalHospitalBeds: 'required|min:1'
 };
 
-router.get('/', (req, res) => {
-  res.send('Covid-19 Impact Estimator root');
-});
+const xmlOptions = {
+  declaration: {
+    include: false
+  }
+};
 
-router.post('/json', (req, res) => {
+router.post(/^\/(json)?$/, (req, res) => {
   // respond json
   const { data = {} } = req.body;
   const validation = new Validator(data, constraints);
@@ -58,11 +60,11 @@ router.post('/xml', (req, res) => {
 
   res.set('Content-Type', 'text/xml');
   if (validation.fails()) {
-    res.status(400).send(js2xmlparser.parse('root', unflatten(validation.errors.all())));
+    res.status(400).send(js2xmlparser.parse('root', unflatten(validation.errors.all()), xmlOptions));
     return;
   }
 
-  res.status(200).send(js2xmlparser.parse('root', estimator(data)));
+  res.status(200).send(js2xmlparser.parse('root', estimator(data), xmlOptions));
 });
 
 router.post('/logs', (req, res) => {
