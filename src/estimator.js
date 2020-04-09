@@ -54,7 +54,7 @@ class ImpactEstimator {
     });
     Object.defineProperty(this, 'hospitalBedsByRequestedTime', {
       get() {
-        return parseInt(0.35 * totalHospitalBeds, 10) - this.severeCasesByRequestedTime;
+        return parseInt(0.35 * totalHospitalBeds - this.severeCasesByRequestedTime, 10);
       },
       enumerable: true
     });
