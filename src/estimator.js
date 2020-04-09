@@ -7,14 +7,6 @@ class ImpactEstimator {
     totalHospitalBeds
   },
   severityFactor) {
-    /*  this.region = region;
-    this.periodType = periodType;
-    this.timeToElapse = timeToElapse;
-    this.reportedCases = reportedCases;
-    this.population = population;
-    this.totalHospitalBeds = totalHospitalBeds;
-    this.severityFactor = severityFactor; */
-
     Object.defineProperty(this, 'currentlyInfected', {
       get() {
         return reportedCases * severityFactor;
