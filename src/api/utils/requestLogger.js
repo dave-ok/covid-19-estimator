@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 
 const writeLog = (time, reqType, endpoint, resCode) => {
-  const resMessage = `\n${reqType}\t\t${endpoint.padEnd(25)}\t\t${resCode}\t\t${time} ms`;
+  const resMessage = `\n${reqType}\t\t${endpoint.padEnd(25)}\t\t${resCode}\t\t${time.toString().padStart(12)} ms`;
   fs.appendFile(path.join(process.cwd(), '/src/requests.log'), resMessage, (error) => {
     if (error) {
       throw error;

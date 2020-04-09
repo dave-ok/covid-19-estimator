@@ -1,5 +1,7 @@
 import express from 'express';
 import Validator from 'validatorjs';
+import fs from 'fs';
+import path from 'path';
 import estimator from '../../estimator';
 
 const js2xmlparser = require('js2xmlparser');
@@ -65,7 +67,14 @@ router.get('/xml', (req, res) => {
 
 router.get('/logs', (req, res) => {
   // return log
-  res.send('get logs');
+  const logStream = fs.createReadStream(path.join(process.cwd(), '/src/requests.log'));
+
+  logStream.on('open', () => {
+    logStream.pipe(res);
+  });
+  logStream.on('error', (error) => {
+    res.end(error);
+  });
 });
 
 

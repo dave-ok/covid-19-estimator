@@ -48,32 +48,32 @@ class ImpactEstimator {
     });
     Object.defineProperty(this, 'severeCasesByRequestedTime', {
       get() {
-        return 0.15 * this.infectionsByRequestedTime;
+        return Math.floor(0.15 * this.infectionsByRequestedTime);
       },
       enumerable: true
     });
     Object.defineProperty(this, 'hospitalBedsByRequestedTime', {
       get() {
-        return 0.35 * totalHospitalBeds - this.severeCasesByRequestedTime;
+        return Math.floor(0.35 * totalHospitalBeds - this.severeCasesByRequestedTime);
       },
       enumerable: true
     });
     Object.defineProperty(this, 'casesForICUByRequestedTime', {
       get() {
-        return 0.05 * this.infectionsByRequestedTime;
+        return Math.floor(0.05 * this.infectionsByRequestedTime);
       },
       enumerable: true
     });
     Object.defineProperty(this, 'casesForVentilatorsByRequestedTime', {
       get() {
-        return 0.02 * this.infectionsByRequestedTime;
+        return Math.floor(0.02 * this.infectionsByRequestedTime);
       },
       enumerable: true
     });
     Object.defineProperty(this, 'dollarsInFlight', {
       get() {
-        return this.infectionsByRequestedTime * region.avgDailyIncomeInUSD
-          * region.avgDailyIncomePopulation * this.periodInDays;
+        return Math.round(this.infectionsByRequestedTime * region.avgDailyIncomeInUSD
+          * region.avgDailyIncomePopulation * this.periodInDays * 100) / 100;
       },
       enumerable: true
     });
