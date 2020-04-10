@@ -58,7 +58,7 @@ router.post('/xml', (req, res) => {
     'region.avgDailyIncomePopulation': 'avgDailyIncomePopulation'
   });
 
-  res.set('Content-Type', 'text/xml');
+  res.set('content-Type', 'text/xml');
   if (validation.fails()) {
     res.status(400).send(js2xmlparser.parse('root', unflatten(validation.errors.all()), xmlOptions));
     return;
@@ -69,7 +69,7 @@ router.post('/xml', (req, res) => {
 
 router.post('/logs', (req, res) => {
   // return log
-  res.set('Content-Type', 'text/plain');
+  res.set('content-Type', 'text/plain');
   const logStream = fs.createReadStream(path.join(process.cwd(), '/src/requests.log'));
 
   logStream.on('open', () => {
