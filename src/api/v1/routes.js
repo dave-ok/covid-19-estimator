@@ -58,7 +58,7 @@ router.post('/xml', (req, res) => {
     'region.avgDailyIncomePopulation': 'avgDailyIncomePopulation'
   });
 
-  res.set('content-type', 'text/xml');
+  res.set('content-type', 'application/xml');
   if (validation.fails()) {
     res.status(400).send(js2xmlparser.parse('root', unflatten(validation.errors.all()), xmlOptions));
     return;
