@@ -69,6 +69,7 @@ router.post('/xml', (req, res) => {
 
 router.post('/logs', (req, res) => {
   // return log
+  res.set('Content-Type', 'text/plain');
   const logStream = fs.createReadStream(path.join(process.cwd(), '/src/requests.log'));
 
   logStream.on('open', () => {
