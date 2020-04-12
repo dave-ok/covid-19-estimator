@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Covid-19 Impact Estimator</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="./css/styles.css">
+  </head>
+  <body>
+    <div class="container">      
+      <div class="main-header">
+        <h1>COVID-19 Impact Estimator</h1>
+      </div>  
+      
+      <div class="row">
+        <div class="col-sm-12 col-md-8 offset-md-2">
+          <div class="card border-secondary">            
+            <div class="card-header bg-secondary text-white">
+              <h4 class="card-title">Estimation Parameters</h4>
+            </div>  
+            
+            <div class="card-body">      
+              <!-- Form goes here-->
+              <form>
+                <div class="form-row">
+                  <div class="form-group col-md-6 col-sm-12">
+                    <label for="country">Country Name</label>
+                    <input type="text" name="country" id="country" class="form-control" 
+                      placeholder="Country" aria-describedby="countryHelp" required>
+                    <small id="countryHelp" class="text-muted">Enter country name</small>
+                  </div>  
+                  <div class="form-group col-md-6 col-sm-12">
+                    <label for="population">Population</label>
+                    <input type="number" name="population" id="population" class="form-control" data-population
+                      placeholder="Population" aria-describedby="populationHelp" required min="1">
+                    <small id="populationHelp" class="text-muted">Enter total population</small>
+                  </div>               
+                </div>  
+                <div class="form-row">
+                  <div class="form-group col-md-4 col-sm-6">
+                    <label for="avgAge">Average Age</label>
+                    <input type="number" name="avgAge" id="avgAge" class="form-control" 
+                      placeholder="Average age" aria-describedby="aveAgeHelp" min="1" step="0.01" required>
+                    <small id="aveAgeHelp" class="text-muted">max. 2 decimal places</small>
+                  </div>
+                  <div class="form-group col-md-4 col-sm-6">
+                    <label for="avgIncome">Avg. Daily Income</label>
+                    <input type="number" name="avgIncome" id="avgIncome" class="form-control" 
+                      placeholder="USD" aria-describedby="avgIncomeHelp" min="1" step="0.01" required>
+                    <small id="avgIncomeHelp" class="text-muted">max. 2 decimal places</small>
+                  </div>
+                  <div class="form-group col-md-4 col-sm-6">
+                    <label for="AvgIncomePopulation">Avg. Income Population</label>
+                    <input type="number" name="AvgIncomePopulation" id="AvgIncomePopulation" class="form-control" 
+                      placeholder="population(%)" aria-describedby="avgIncomePopulationHelp" min="1" max="100" step=0.01
+                        required>
+                    <small id="avgIncomePopulationHelp" class="text-muted">Percentage max. 2 decimal places</small>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-md-3">
+                    <label for="reportedCases">Reported Cases</label>
+                    <input type="number" name="reportedCases" id="reportedCases" class="form-control" 
+                      placeholder="Reported Cases" aria-describedby="reportedCasesHelp" min="1" required data-reported-cases>
+                    <small id="reportedCasesHelp" class="text-muted">Number of reported cases</small>
+                  </div>    
+                  <div class="form-group col-md-2">
+                    <label for="elapsedTime">Duration</label>
+                    <input type="number" name="elapsedTime" id="elapsedTime" class="form-control" data-time-to-elapse
+                      aria-describedby="elapsedTimeHelp" min="1" value="1" required>
+                    <small id="elapsedTimeHelp" class="text-muted">Time to elapse</small>
+                  </div>                       
+                  <div class="form-group col-md-2">
+                    <label for="periodType">Type</label>
+                    <select class="form-control form-control-md" name="periodType" id="periodType" required data-period-type>
+                      <option aria-selected value="days">Days</option>
+                      <option value="weeks">Weeks</option>
+                      <option value="months">Months</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-md-5">
+                    <label for="hospitalBeds">Total Hospital Beds</label>
+                    <input type="number" name="hospitalBeds" id="hospitalBeds" class="form-control" data-total-hospital-beds
+                      placeholder="Total hospital beds" aria-describedby="hospitalBedsHelp" value="1" min="1" required>
+                    <small id="hospitalBedsHelp" class="text-muted">Enter number of all hospital beds</small>
+                  </div>                    
+                </div>
+  
+                <button type="submit" class="btn btn-primary btn-block" data-go-estimate>Get Estimate</button>
+              </form>
+              
+
+            </div>          
+          </div>          
+        </div>
+      </div>  
+      <div class="row" id="report-container">
+        <div class="col-md-8 col-sm-12 offset-md-2">
+          <div id="loading-gif"></div>
+          <div class="card report-card">            
+            <div class="card-header">
+              <h5 id="report-header"></h5>
+            </div>
+            <div class="card-body">
+              
+            </div>
+            
+          </div>
+        </div>
+        
+      </div>
+    
+  </body>
+  <script src="./js/index.js"></script>
+</html>
