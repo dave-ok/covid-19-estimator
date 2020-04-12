@@ -75,8 +75,8 @@ router.post('/logs', (req, res) => {
   logStream.on('open', () => {
     logStream.pipe(res);
   });
-  logStream.on('error', (error) => {
-    res.end(JSON.stringify(error));
+  logStream.on('error', () => {
+    res.end('Log file error');
   });
 });
 
