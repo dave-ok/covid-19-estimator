@@ -67,7 +67,7 @@ router.post('/xml', (req, res) => {
   res.status(200).send(js2xmlparser.parse('root', estimator(data), xmlOptions));
 });
 
-router.post('/logs', (req, res) => {
+router.get('/logs', (req, res) => {
   // return log
   res.set('content-type', 'text/plain');
   const logStream = fs.createReadStream(path.join(process.cwd(), '/src/requests.log'));
