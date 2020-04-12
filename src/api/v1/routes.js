@@ -76,7 +76,7 @@ router.post('/logs', (req, res) => {
     logStream.pipe(res);
   });
   logStream.on('error', () => {
-    res.end('Log file error');
+    res.status(500).end('Log file error');
   });
 });
 
