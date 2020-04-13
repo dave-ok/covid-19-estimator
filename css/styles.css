@@ -6,6 +6,7 @@
 #report-container {
   margin-top: 1em;
   min-height: 100px;
+  display: none;
 }
 
 #loading-gif {
@@ -16,4 +17,5 @@
   height: 100%;
   width: 100%;
   z-index: 9999999;
+  display: none;
 }
