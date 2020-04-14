@@ -1,0 +1,3 @@
+/*! covid-19-estimator-js 14-04-2020 */
+
+!function i(u,f,c){function a(e,r){if(!f[e]){if(!u[e]){var t="function"==typeof require&&require;if(!r&&t)return t(e,!0);if(s)return s(e,!0);var n=new Error("Cannot find module '"+e+"'");throw n.code="MODULE_NOT_FOUND",n}var o=f[e]={exports:{}};u[e][0].call(o.exports,function(r){return a(u[e][1][r]||r)},o,o.exports,i,u,f,c)}return f[e].exports}for(var s="function"==typeof require&&require,r=0;r<c.length;r++)a(c[r]);return a}({1:[function(r,e,t){"use strict";document.querySelector("[data-go-estimate]").addEventListener("click",function(){})},{}]},{},[1]);
