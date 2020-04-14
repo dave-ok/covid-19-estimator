@@ -38,6 +38,7 @@ class ImpactEstimator {
       },
       enumerable: true
     });
+
     Object.defineProperty(this, 'severeCasesByRequestedTime', {
       get() {
         return parseInt(0.15 * this.infectionsByRequestedTime, 10);
